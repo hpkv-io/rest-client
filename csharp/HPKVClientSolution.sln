@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPKVClient", "HPKVClient\HPKVClient.csproj", "{1884E284-EEDF-4ECC-8BCD-B3E5F1BB04F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPKVExample", "HPKVExample\HPKVExample.csproj", "{DCDCF851-1B0F-4182-A53A-FC16E8EC35C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1884E284-EEDF-4ECC-8BCD-B3E5F1BB04F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1884E284-EEDF-4ECC-8BCD-B3E5F1BB04F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1884E284-EEDF-4ECC-8BCD-B3E5F1BB04F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1884E284-EEDF-4ECC-8BCD-B3E5F1BB04F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCDCF851-1B0F-4182-A53A-FC16E8EC35C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCDCF851-1B0F-4182-A53A-FC16E8EC35C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCDCF851-1B0F-4182-A53A-FC16E8EC35C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCDCF851-1B0F-4182-A53A-FC16E8EC35C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
