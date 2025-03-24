@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hpkv-rest-client"
+version = "1.0.0"
+authors = [
+  { name="HPKV Team", email="support@hpkv.io" },
+]
+description = "Python client for HPKV REST API"
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "requests>=2.31.0"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/hpkv-io/rest-client/sdk/python"
+"Bug Tracker" = "https://github.com/hpkv-io/rest-client/issues"
+
+[tool.hatch.build]
+packages = ["src/hpkv_rest_client"]

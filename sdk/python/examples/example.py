@@ -1,13 +1,14 @@
 import json
 import time
+import os
 from datetime import datetime
 
-from hpkv_client import HPKVClient, HPKVException
+from hpkv_rest_client import HPKVClient, HPKVException
 
 
 # Replace with your actual API key and base URL
-API_KEY = "fa7d6c5846884d0cb56f339961531d45"
-BASE_URL = "https://api-eu-1.hpkv.io"
+API_KEY = os.getenv("HPKV_API_KEY")
+BASE_URL = os.getenv("HPKV_API_BASE_URL")
 
 
 def main():

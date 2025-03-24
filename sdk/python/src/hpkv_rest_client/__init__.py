@@ -1,5 +1,4 @@
 from .hpkv_client import HPKVClient, HPKVException
-from .async_hpkv_client import AsyncHPKVClient
 from .models import (
     SetRecordRequest,
     IncrementRequest,
@@ -11,7 +10,7 @@ from .models import (
     IncrementResponse
 )
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 __all__ = [
     'HPKVClient',

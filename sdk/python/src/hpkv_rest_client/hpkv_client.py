@@ -1,16 +1,51 @@
 import json
 import urllib.parse
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict
 import requests
 
 
 class HPKVException(Exception):
-    """Exception thrown for HPKV API errors"""
+    """Base exception for HPKV API errors"""
     
     def __init__(self, message: str, status_code: int = None, response_data: Dict = None):
         super().__init__(message)
         self.status_code = status_code
         self.response_data = response_data
+
+
+class HPKVBadRequestError(HPKVException):
+    """Raised when the request is malformed or invalid"""
+    pass
+
+
+class HPKVUnauthorizedError(HPKVException):
+    """Raised when the API key is missing or invalid"""
+    pass
+
+
+class HPKVForbiddenError(HPKVException):
+    """Raised when the operation is not allowed"""
+    pass
+
+
+class HPKVNotFoundError(HPKVException):
+    """Raised when the requested record is not found"""
+    pass
+
+
+class HPKVConflictError(HPKVException):
+    """Raised when there's a timestamp conflict"""
+    pass
+
+
+class HPKVRateLimitError(HPKVException):
+    """Raised when rate limit is exceeded"""
+    pass
+
+
+class HPKVInternalError(HPKVException):
+    """Raised when the server encounters an internal error"""
+    pass
 
 
 class HPKVClient:
@@ -69,7 +104,10 @@ class HPKVClient:
         response = requests.post(url, headers=self.headers, json=payload)
         self._handle_errors(response)
         
-        return response.json()
+        result = response.json()
+        if not isinstance(result, dict) or "success" not in result:
+            raise HPKVInternalError("Invalid response format from server", response.status_code, result)
+        return result
     
     def get(self, key: str) -> Dict[str, Any]:
         """
@@ -89,7 +127,10 @@ class HPKVClient:
         response = requests.get(url, headers=self.headers)
         self._handle_errors(response)
         
-        return response.json()
+        result = response.json()
+        if not isinstance(result, dict) or "key" not in result or "value" not in result:
+            raise HPKVInternalError("Invalid response format from server", response.status_code, result)
+        return result
     
     def delete(self, key: str) -> Dict[str, Any]:
         """
@@ -109,7 +150,10 @@ class HPKVClient:
         response = requests.delete(url, headers=self.headers)
         self._handle_errors(response)
         
-        return response.json()
+        result = response.json()
+        if not isinstance(result, dict) or "success" not in result:
+            raise HPKVInternalError("Invalid response format from server", response.status_code, result)
+        return result
     
     def increment(self, key: str, increment: int = 1) -> Dict[str, Any]:
         """
@@ -135,7 +179,10 @@ class HPKVClient:
         response = requests.post(url, headers=self.headers, json=payload)
         self._handle_errors(response)
         
-        return response.json()
+        result = response.json()
+        if not isinstance(result, dict) or "result" not in result:
+            raise HPKVInternalError("Invalid response format from server", response.status_code, result)
+        return result
     
     def query(self, start_key: str, end_key: str, limit: int = 100) -> Dict[str, Any]:
         """
@@ -163,7 +210,10 @@ class HPKVClient:
         response = requests.get(url, headers=self.headers, params=params)
         self._handle_errors(response)
         
-        return response.json()
+        result = response.json()
+        if not isinstance(result, dict) or "records" not in result or "count" not in result:
+            raise HPKVInternalError("Invalid response format from server", response.status_code, result)
+        return result
     
     def _handle_errors(self, response: requests.Response) -> None:
         """
@@ -190,4 +240,20 @@ class HPKVClient:
             else:
                 message = f"HTTP error {response.status_code}"
             
-            raise HPKVException(message, response.status_code, error_data) 
+            # Map status codes to specific exceptions
+            if response.status_code == 400:
+                raise HPKVBadRequestError(message, response.status_code, error_data)
+            elif response.status_code == 401:
+                raise HPKVUnauthorizedError(message, response.status_code, error_data)
+            elif response.status_code == 403:
+                raise HPKVForbiddenError(message, response.status_code, error_data)
+            elif response.status_code == 404:
+                raise HPKVNotFoundError(message, response.status_code, error_data)
+            elif response.status_code == 409:
+                raise HPKVConflictError(message, response.status_code, error_data)
+            elif response.status_code == 429:
+                raise HPKVRateLimitError(message, response.status_code, error_data)
+            elif response.status_code >= 500:
+                raise HPKVInternalError(message, response.status_code, error_data)
+            else:
+                raise HPKVException(message, response.status_code, error_data) 
