@@ -1,7 +1,5 @@
-import type { Config } from 'jest';
-
-const config: Config = {
-  preset: 'ts-jest/presets/default-esm',
+export default {
+  preset: 'ts-jest',
   testEnvironment: 'node',
   extensionsToTreatAsEsm: ['.ts'],
   moduleNameMapper: {
@@ -15,6 +13,5 @@ const config: Config = {
       },
     ],
   },
+  testMatch: ['**/tests/**/*.test.ts'],
 };
-
-export default config;

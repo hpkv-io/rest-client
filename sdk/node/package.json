@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"**/*.ts\"",
@@ -26,7 +26,7 @@
     "api",
     "typescript"
   ],
-  "author": "HPKV Team",
+  "author": "HPKV",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^16.4.5"
