@@ -40,7 +40,6 @@ jobs:
         run: |
           cd sdk/node
           npm ci
-          npm version ${{ needs.determine-sdk.outputs.version }} --no-git-tag-version
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
