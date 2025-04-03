@@ -43,7 +43,7 @@ jobs:
           npm version ${{ needs.determine-sdk.outputs.version }} --no-git-tag-version
           npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
       
       # Python publishing
       - name: Setup Python
