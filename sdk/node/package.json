@@ -1,15 +1,24 @@
 {
   "name": "@hpkv/rest-client",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A NodeJS REST client for high-performance key-value store (HPKV)",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "files": [
-    "dist",
+    "dist/src",
     "README.md",
     "LICENSE"
   ],
+  "homepage":"https://github.com/hpkv-io/rest-client/tree/develop/sdk/node#readme",
+  "bugs": {
+    "url": "https://github.com/hpkv-io/rest-client/issues",
+    "email": "support@hpkv.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hpkv-io/rest-client.git"
+  },
   "scripts": {
     "build": "tsc",
     "test": "jest",
