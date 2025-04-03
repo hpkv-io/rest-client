@@ -43,6 +43,7 @@ jobs:
           cd sdk/node
           npm ci
           npm run lint
+          npm run build
           npm test
           npm pack
           echo "Ready to release Node.js SDK version ${{ needs.determine-sdk.outputs.version }}"
