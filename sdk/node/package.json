@@ -10,6 +10,15 @@
     "README.md",
     "LICENSE"
   ],
+  "homepage":"https://github.com/hpkv-io/rest-client/tree/develop/sdk/node#readme",
+  "bugs": {
+    "url": "https://github.com/hpkv-io/rest-client/issues",
+    "email": "support@hpkv.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hpkv-io/rest-client.git"
+  },
   "scripts": {
     "build": "tsc",
     "test": "jest",
