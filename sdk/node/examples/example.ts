@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import HPKVRestClient from "../src/index.js";
+import { HPKVRestClient } from "../src/client";
 import dotenv from "dotenv";
 
 // Load environment variables
@@ -50,7 +50,7 @@ async function main(): Promise<void> {
     await client.set("counter:visits", "0");
 
     // Increment counter
-    const incrementResult = await client.increment("counter:visits", 1);
+    const incrementResult = await client.atomicIncrement("counter:visits", 1);
     console.log("Increment result:", incrementResult);
 
     // Example 3: Range queries
@@ -62,7 +62,7 @@ async function main(): Promise<void> {
     await client.set("users:003", "Charlie");
 
     // Query records in a range
-    const rangeResult = await client.getRange("users:001", "users:003", 10);
+    const rangeResult = await client.range("users:001", "users:003", 10);
     console.log("Range query result:", rangeResult);
 
     // Example 4: Nexus Search
@@ -72,6 +72,9 @@ async function main(): Promise<void> {
     await client.set("doc:1", "The quick brown fox jumps over the lazy dog");
     await client.set("doc:2", "A quick brown dog runs in the park");
     await client.set("doc:3", "The lazy fox sleeps under the tree");
+
+    // wait for 30 seconds to ensure the documents are indexed
+    await new Promise((resolve) => setTimeout(resolve, 30000));
 
     // Perform semantic search
     const searchResult = await client.nexusSearch("quick brown animal", {
@@ -85,7 +88,7 @@ async function main(): Promise<void> {
 
     // Get AI-generated answer
     const queryResult = await client.nexusQuery(
-      "What animals are mentioned in the documents?",
+      "What did quick brown fox do?",
       {
         topK: 3,
         minScore: 0.5,
