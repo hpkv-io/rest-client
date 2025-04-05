@@ -55,10 +55,10 @@ await client.set(
 );
 
 // Atomic Increment counter
-const counter = await client.increment('visits', 1);
+const counter = await client.atomicIncrement('visits', 1);
 
 // Range query 
-const records = await client.getRange('start', 'end', 100);
+const records = await client.range('start', 'end', 100);
 
 // Semantic search
 const searchResults = await client.nexusSearch('find John Doe''s information');
@@ -77,7 +77,7 @@ new HPKVRestClient(baseUrl: string, nexusBaseUrl: string, apiKey: string)
 
 ### Methods
 
-#### `set(key: string, value: string | Record<string, any>, partialUpdate?: boolean): Promise<RecordResponse>`
+#### `set(key: string, value: unknown, partialUpdate?: boolean): Promise<RecordResponse>`
 
 Set a value for a key. If `partialUpdate` is true, the value will be appended to the existing. If the existing and new values are valid JSON, it performs an atomic JSON patching.
 
@@ -89,11 +89,11 @@ Get a value by key.
 
 Delete a key-value pair.
 
-#### `increment(key: string, increment?: number): Promise<RecordResponse>`
+#### `atomicIncrement(key: string, increment: number): Promise<RecordResponse>`
 
 Increment or decrement a numeric value atomically.
 
-#### `getRange(startKey: string, endKey: string, limit?: number): Promise<RangeResponse>`
+#### `range(startKey: string, endKey: string, limit=100): Promise<RangeResponse>`
 
 Query records within a key range.
 
