@@ -178,7 +178,10 @@ export class HPKVRestClient {
    */
   async delete(key: string): Promise<RecordResponse> {
     try {
-      return await this._request<RecordResponse>("DELETE", `/record/${key}`);
+      return await this._request<RecordResponse>(
+        "DELETE",
+        `/record/${encodeURIComponent(key)}`,
+      );
     } catch (error) {
       this._handleError(error as ApiError);
     }
@@ -242,8 +245,8 @@ export class HPKVRestClient {
   ): Promise<RangeResponse> {
     try {
       const params = new URLSearchParams({
-        startKey,
-        endKey,
+        startKey: encodeURIComponent(startKey),
+        endKey: encodeURIComponent(endKey),
         limit: limit.toString(),
       });
       return await this._request<RangeResponse>("GET", `/records?${params}`);

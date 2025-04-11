@@ -196,6 +196,35 @@ describe("HPKVClient Integration Tests", () => {
       expect(result.value).toBe(value);
     });
 
+    test("should delete keys with special characters", async () => {
+      const key = getTestKey("special-delete:!@#$%^&*()_+");
+      testKeys.push(key);
+      const value = "Value to be deleted";
+
+      await client.set(key, value);
+      await client.delete(key);
+      await expect(client.get(key)).rejects.toThrow();
+    });
+
+    test("should handle range queries with special characters in keys", async () => {
+      const specialKeys = [
+        getTestKey("special-range:!@#$%^&*()_+:1"),
+        getTestKey("special-range:!@#$%^&*()_+:2"),
+        getTestKey("special-range:!@#$%^&*()_+:3"),
+      ];
+
+      for (const key of specialKeys) {
+        testKeys.push(key);
+        await client.set(key, `Value for ${key}`);
+      }
+
+      const results = await client.range(specialKeys[0], specialKeys[2], 10);
+
+      expect(results.records).toHaveLength(3);
+      expect(results.truncated).toBe(false);
+      expect(results.records.map((r) => r.key)).toEqual(specialKeys);
+    });
+
     test("should throw when value size exceeded", async () => {
       const key = getTestKey("large");
       testKeys.push(key);
